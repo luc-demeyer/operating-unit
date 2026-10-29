@@ -11,4 +11,8 @@ class StockRule(models.Model):
         res = super()._prepare_purchase_order(company_id, origins, values)
         if self.operating_unit_id:
             res["operating_unit_id"] = self.operating_unit_id.id
+            res["requesting_operating_unit_id"] = self.operating_unit_id.id
+        elif values[0].get("operating_unit_id"):
+            res["operating_unit_id"] = values[0]["operating_unit_id"]
+            res["requesting_operating_unit_id"] = values[0]["operating_unit_id"]
         return res
